@@ -18,15 +18,15 @@ function ContactSection() {
         <div className="mt-4 grid gap-4 lg:grid-cols-3">
           <motion.div variants={fadeUp}>
             <h3 className="font-serif text-2xl">Studio</h3>
-            <p className="mt-2 text-sm leading-6 text-stone-300">24 Fashion Avenue, Karachi</p>
+            <p className="mt-2 text-sm leading-6 text-stone-300">24 Fashion Avenue, Milan, Italy</p>
           </motion.div>
           <motion.div variants={fadeUp}>
             <h3 className="font-serif text-2xl">Phone</h3>
-            <p className="mt-2 text-sm leading-6 text-stone-300">+92 300 1234567</p>
+            <p className="mt-2 text-sm leading-6 text-stone-300">+44 20 1234 5678</p>
           </motion.div>
           <motion.div variants={fadeUp}>
             <h3 className="font-serif text-2xl">Email</h3>
-            <p className="mt-2 text-sm leading-6 text-stone-300">hello@veloura-demo.com</p>
+            <p className="mt-2 text-sm leading-6 text-stone-300">hello@velora-demo.com</p>
           </motion.div>
         </div>
       </div>

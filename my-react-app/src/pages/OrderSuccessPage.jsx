@@ -100,15 +100,7 @@ function OrderSuccessPage({ orderConfirmation, onBackHome, onShopAgain }) {
             </div>
 
             <div className="mt-8 grid gap-3">
-              <motion.button
-                type="button"
-                onClick={onShopAgain}
-                className="w-full cursor-pointer rounded-full bg-white px-6 py-4 text-sm font-medium uppercase tracking-[0.24em] text-stone-950 transition hover:-translate-y-0.5 hover:bg-stone-100"
-                whileHover={{ y: -4, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Shop Again
-              </motion.button>
+              
               <motion.button
                 type="button"
                 onClick={onBackHome}

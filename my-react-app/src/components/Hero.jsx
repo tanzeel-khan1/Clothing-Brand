@@ -13,7 +13,7 @@ function Hero({ onShopNow }) {
       <div className="mx-auto grid max-w-7xl gap-8 lg:grid-cols-[1fr_1.05fr] lg:items-center">
         <motion.div variants={staggerContainer}>
           <motion.p variants={fadeUp} className="text-xs font-semibold uppercase tracking-[0.4em] text-stone-500">
-            Luxury Clothing House
+            Luxury Clothing Brand
           </motion.p>
           <motion.h1 variants={fadeUp} className="mt-5 max-w-xl font-serif text-4xl leading-tight text-stone-950 sm:text-5xl lg:text-6xl">
             Premium essentials for a quiet, modern statement.

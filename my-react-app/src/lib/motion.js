@@ -9,7 +9,6 @@ export const fadeUp = {
     },
   },
 }
-
 export const fadeIn = {
   hidden: { opacity: 0 },
   visible: {

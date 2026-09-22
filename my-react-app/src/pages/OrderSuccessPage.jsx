@@ -8,40 +8,53 @@ function OrderSuccessPage({ orderConfirmation, onBackHome, onShopAgain }) {
 
   return (
     <motion.div
-      className="min-h-screen bg-[#f6f1ea] px-4 py-8 sm:px-6 lg:px-8"
+      className="min-h-screen bg-ivory px-4 py-10 sm:px-6 lg:px-8 lg:py-16"
       initial="hidden"
       animate="visible"
       variants={staggerContainer}
     >
-      <motion.div variants={fadeUp} className="mx-auto max-w-5xl rounded-[2rem] border border-stone-200 bg-white p-6 shadow-[0_22px_60px_rgba(28,25,23,0.08)] lg:p-10">
-        <div className="flex flex-col items-start gap-5">
+      <motion.div
+        variants={fadeUp}
+        className="mx-auto max-w-5xl overflow-hidden rounded-[2.2rem] border border-sand/70 bg-white shadow-soft"
+      >
+        <div className="border-b border-sand bg-cream px-6 py-10 text-center sm:px-10 lg:py-14">
           <motion.div
-            className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100 text-emerald-700"
-            initial={{ scale: 0.7, opacity: 0 }}
+            className="mx-auto flex h-20 w-20 items-center justify-center rounded-full border border-gold/40 bg-ivory text-gold shadow-rim"
+            initial={{ scale: 0.6, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ delay: 0.15, type: 'spring', stiffness: 180, damping: 14 }}
           >
-            <svg viewBox="0 0 24 24" className="h-8 w-8" fill="none" stroke="currentColor" strokeWidth="2">
+            <svg viewBox="0 0 24 24" className="h-9 w-9" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M5 13l4 4L19 7" />
             </svg>
           </motion.div>
 
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.35em] text-stone-500">Order Confirmed</p>
-            <h1 className="mt-3 font-serif text-4xl text-stone-950 sm:text-5xl">Thank you for your purchase.</h1>
-            <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600">
-              Your order has been placed successfully. This confirmation page is demo-only, but it follows a real
-              post-payment flow.
-            </p>
+          <p className="mt-6 text-[11px] font-bold uppercase tracking-[0.38em] text-gold">Order Confirmed</p>
+          <h1 className="mt-3 font-serif text-4xl text-ink sm:text-5xl">Thank you for your purchase.</h1>
+          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-taupe">
+            Your order has been placed successfully and is being prepared at the atelier. This confirmation page is
+            demo-only, but it follows a real post-payment flow.
+          </p>
+
+          <div className="mx-auto mt-8 grid max-w-2xl grid-cols-1 gap-3 text-left sm:grid-cols-3">
+            {[
+              { title: 'Order Number', value: orderConfirmation?.orderId || '—' },
+              { title: 'Date Placed', value: orderConfirmation?.paymentDate || 'today' },
+              { title: 'Total Paid', value: `$${subtotal.toFixed(2)}` },
+            ].map((cell) => (
+              <div key={cell.title} className="rounded-2xl border border-sand/70 bg-white px-5 py-4 shadow-soft">
+                <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-fawn">{cell.title}</p>
+                <p className="mt-1.5 font-serif text-xl text-ink">{cell.value}</p>
+              </div>
+            ))}
           </div>
         </div>
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-[1fr_0.9fr]">
-          <section className="rounded-[1.5rem] bg-stone-50 p-6">
-            <div className="flex flex-col gap-2 border-b border-stone-200 pb-5">
-              <p className="text-sm uppercase tracking-[0.18em] text-stone-500">Order Number</p>
-              <p className="text-xl font-semibold text-stone-950">{orderConfirmation?.orderId || 'Pending'}</p>
-              <p className="text-sm text-stone-600">Placed on {orderConfirmation?.paymentDate || 'today'}</p>
+        <div className="grid gap-8 p-6 sm:p-10 lg:grid-cols-[1.1fr_0.9fr]">
+          <section>
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-gold" />
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold">Ordered Pieces</p>
             </div>
 
             <div className="mt-5 space-y-4">
@@ -49,67 +62,77 @@ function OrderSuccessPage({ orderConfirmation, onBackHome, onShopAgain }) {
                 items.map((item, index) => (
                   <motion.div
                     key={`${item.productId}-${item.size}`}
-                    className="flex items-center gap-4 rounded-[1.25rem] bg-white p-4"
+                    className="flex items-center gap-4 rounded-[1.4rem] border border-sand/70 bg-cream/60 p-4"
                     initial={{ opacity: 0, y: 18 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.18 + index * 0.06 }}
                   >
                     <img src={item.image} alt={item.name} className="h-20 w-16 rounded-xl object-cover" />
                     <div className="flex-1">
-                      <p className="font-medium text-stone-900">{item.name}</p>
-                      <p className="mt-1 text-sm text-stone-600">Size: {item.size}</p>
-                      <p className="text-sm text-stone-600">Quantity: {item.quantity}</p>
+                      <p className="font-serif text-xl leading-tight text-ink">{item.name}</p>
+                      <p className="mt-1 text-sm text-taupe">
+                        Size {item.size} · Quantity {item.quantity}
+                      </p>
                     </div>
-                    <p className="font-semibold text-stone-900">${(item.price * item.quantity).toFixed(2)}</p>
+                    <p className="font-serif text-lg font-semibold text-ink">
+                      ${(item.price * item.quantity).toFixed(2)}
+                    </p>
                   </motion.div>
                 ))
               ) : (
-                <div className="rounded-[1.25rem] bg-white p-4 text-sm text-stone-600">
+                <div className="rounded-2xl border border-dashed border-parchment bg-cream p-6 text-sm text-taupe">
                   No order items were available, but the confirmation page is ready.
                 </div>
               )}
             </div>
+
+            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+              <button type="button" onClick={onShopAgain} className="btn-primary">
+                Shop Again
+              </button>
+              <button type="button" onClick={onBackHome} className="btn-outline">
+                Back Home
+              </button>
+            </div>
           </section>
 
-          <aside className="rounded-[1.5rem] bg-stone-950 p-6 text-white">
-            <h2 className="font-serif text-3xl">Delivery Summary</h2>
+          <aside className="rounded-[1.6rem] bg-ink p-6 text-white sm:p-8">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-8 bg-gold" />
+              <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold-light">Delivery Summary</p>
+            </div>
 
-            <div className="mt-6 space-y-4 text-sm text-stone-300">
+            <div className="mt-6 space-y-5 text-sm">
               <div>
-                <p className="uppercase tracking-[0.18em] text-stone-400">Customer</p>
-                <p className="mt-2 text-base text-white">{customer.fullName || 'Guest Customer'}</p>
-                <p className="mt-1">{customer.phone || 'No phone provided'}</p>
+                <p className="uppercase tracking-[0.18em] text-ivory/50">Customer</p>
+                <p className="mt-2 font-serif text-xl text-ivory">{customer.fullName || 'Guest Customer'}</p>
+                <p className="mt-1 text-ivory/70">{customer.phone || 'No phone provided'}</p>
               </div>
 
               <div>
-                <p className="uppercase tracking-[0.18em] text-stone-400">Address</p>
-                <p className="mt-2">{customer.address || 'No address provided'}</p>
-                <p className="mt-1">{customer.city || 'No city provided'}</p>
+                <p className="uppercase tracking-[0.18em] text-ivory/50">Address</p>
+                <p className="mt-2 text-ivory/80">{customer.address || 'No address provided'}</p>
+                <p className="mt-1 text-ivory/80">{customer.city || 'No city provided'}</p>
               </div>
 
-              <div className="border-t border-white/15 pt-4">
-                <div className="flex items-center justify-between">
-                  <span>Shipping</span>
-                  <span>Free</span>
+              <div className="border-t border-ivory/10 pt-5">
+                <div className="flex items-center justify-between text-ivory/70">
+                  <span className="uppercase tracking-[0.14em]">Shipping</span>
+                  <span className="font-semibold text-gold-light">Free</span>
                 </div>
                 <div className="mt-3 flex items-center justify-between">
-                  <span>Total Paid</span>
-                  <span className="text-lg font-semibold text-white">${subtotal.toFixed(2)}</span>
+                  <span className="font-bold uppercase tracking-[0.14em]">Total Paid</span>
+                  <span className="font-serif text-2xl text-gold-light">${subtotal.toFixed(2)}</span>
                 </div>
               </div>
             </div>
 
-            <div className="mt-8 grid gap-3">
-              
-              <motion.button
-                type="button"
-                onClick={onBackHome}
-                className="w-full cursor-pointer rounded-full border border-white/20 px-6 py-4 text-sm font-medium uppercase tracking-[0.24em] text-white transition hover:-translate-y-0.5 hover:bg-white/10"
-                whileHover={{ y: -4, scale: 1.01 }}
-                whileTap={{ scale: 0.98 }}
-              >
-                Back Home
-              </motion.button>
+            <div className="mt-6 flex items-center gap-2 rounded-2xl border border-gold/30 bg-gold/10 px-4 py-3 text-xs font-semibold uppercase tracking-[0.14em] text-gold-light">
+              <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="1.8">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 11v5M12 8h.01" />
+              </svg>
+              Estimated delivery in 3–5 business days
             </div>
           </aside>
         </div>

@@ -1,480 +1,168 @@
-// import { useMemo, useState } from "react";
-// import { motion } from "framer-motion";
-// import { fadeUp, staggerContainer } from "../lib/motion";
+import { useMemo, useState } from 'react'
+import { motion } from 'framer-motion'
+import { fadeUp, staggerContainer } from '../lib/motion'
 
-// const initialPaymentForm = {
-//   email: "",
-//   cardName: "",
-//   cardNumber: "",
-//   expiry: "",
-//   cvv: "",
-//   country: "",
-//   zipCode: "",
-//   billingAddress: "",
-// };
+function PaymentPage({ cartItems, subtotal, checkoutForm, onBackToStore, onPaymentSuccess }) {
+  const [form, setForm] = useState(() => ({
+    email: '',
+    fullName: checkoutForm?.fullName ?? '',
+    phone: checkoutForm?.phone ?? '',
+    streetAddress: checkoutForm?.address ?? '',
+    city: checkoutForm?.city ?? '',
+    zipCode: '',
+  }))
 
-// function PaymentPage({
-//   cartItems,
-//   subtotal,
-//   checkoutForm,
-//   onBackToStore,
-//   onPaymentSuccess,
-// }) {
-//   const [paymentForm, setPaymentForm] = useState(initialPaymentForm);
-//   const [paymentMethod, setPaymentMethod] = useState("card");
+  const itemCount = useMemo(() => cartItems.reduce((total, item) => total + item.quantity, 0), [cartItems])
 
-//   const itemLabel = useMemo(() => {
-//     if (cartItems.length === 0) {
-//       return "No items in cart";
-//     }
+  const handleChange = (event) => {
+    const { name, value } = event.target
+    setForm((current) => ({ ...current, [name]: value }))
+  }
 
-//     return cartItems.map((item) => `${item.name} x${item.quantity}`).join(", ");
-//   }, [cartItems]);
-
-//   const handleChange = (event) => {
-//     const { name, value } = event.target;
-
-//     setPaymentForm((current) => ({
-//       ...current,
-//       [name]: value,
-//     }));
-//   };
-
-//   const handleSubmit = (event) => {
-//     event.preventDefault();
-//     onPaymentSuccess();
-//   };
-
-//   return (
-//     <motion.div
-//       className="min-h-screen bg-[#f6f1ea] px-4 py-8 sm:px-6 lg:px-8"
-//       initial="hidden"
-//       animate="visible"
-//       variants={staggerContainer}
-//     >
-//       <div className="mx-auto max-w-7xl">
-//         <motion.div
-//           variants={fadeUp}
-//           className="mb-6 flex items-center justify-between gap-4"
-//         >
-//           <motion.button
-//             type="button"
-//             onClick={onBackToStore}
-//             className="cursor-pointer rounded-full border border-stone-300 bg-white px-5 py-3 text-sm font-medium text-stone-800 transition hover:-translate-y-0.5 hover:shadow-md"
-//             whileHover={{ y: -3 }}
-//             whileTap={{ scale: 0.98 }}
-//           >
-//             Back to Store
-//           </motion.button>
-//           <p className="font-serif text-2xl text-stone-950">Secure Payment</p>
-//         </motion.div>
-
-//         <div className="grid gap-8 lg:grid-cols-[1.1fr_0.9fr]">
-//           <motion.section
-//             variants={fadeUp}
-//             className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-[0_22px_60px_rgba(28,25,23,0.08)] lg:p-10"
-//           >
-//             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-stone-500">
-//               Payment Details
-//             </p>
-//             <h1 className="mt-4 font-serif text-3xl text-stone-950 sm:text-4xl">
-//               Complete your purchase
-//             </h1>
-//             <p className="mt-4 max-w-2xl text-base leading-7 text-stone-600">
-//               This demo payment page looks like a real checkout flow, but it
-//               stays flexible so any values you enter will go through without
-//               strict validation.
-//             </p>
-
-//             <div className="mt-8 grid gap-3 sm:grid-cols-3">
-//               {[
-//                 ["card", "Credit Card"],
-//                 ["bank", "Bank Transfer"],
-//                 ["cod", "Cash on Delivery"],
-//               ].map(([value, label]) => {
-//                 const active = paymentMethod === value;
-
-//                 return (
-//                   <motion.button
-//                     key={value}
-//                     type="button"
-//                     onClick={() => setPaymentMethod(value)}
-//                     className={`cursor-pointer rounded-2xl border px-4 py-4 text-sm font-medium transition ${
-//                       active
-//                         ? "border-stone-950 bg-stone-950 text-white shadow-lg"
-//                         : "border-stone-300 bg-stone-50 text-stone-700 hover:border-stone-950"
-//                     }`}
-//                     whileHover={{ y: -2 }}
-//                     whileTap={{ scale: 0.98 }}
-//                   >
-//                     {label}
-//                   </motion.button>
-//                 );
-//               })}
-//             </div>
-
-//             <motion.form
-//               variants={staggerContainer}
-//               onSubmit={handleSubmit}
-//               className="mt-8 grid gap-4"
-//             >
-//               <motion.input
-//                 variants={fadeUp}
-//                 type="text"
-//                 name="email"
-//                 value={paymentForm.email}
-//                 onChange={handleChange}
-//                 placeholder="Email Address"
-//                 required
-//                 className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//               />
-//               <motion.input
-//                 variants={fadeUp}
-//                 type="text"
-//                 name="cardName"
-//                 value={paymentForm.cardName}
-//                 onChange={handleChange}
-//                 placeholder="Cardholder Name"
-//                 required
-//                 className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//               />
-//               <motion.input
-//                 variants={fadeUp}
-//                 type="text"
-//                 name="cardNumber"
-//                 value={paymentForm.cardNumber}
-//                 onChange={handleChange}
-//                 required
-//                 placeholder="Card Number"
-//                 className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//               />
-
-//               <div className="grid gap-4 sm:grid-cols-2">
-//                 <motion.input
-//                   variants={fadeUp}
-//                   type="text"
-//                   name="expiry"
-//                   value={paymentForm.expiry}
-//                   onChange={handleChange}
-//                   placeholder="Expiry Date"
-//                   required
-//                   className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//                 />
-//                 <motion.input
-//                   variants={fadeUp}
-//                   type="text"
-//                   name="cvv"
-//                   value={paymentForm.cvv}
-//                   onChange={handleChange}
-//                   placeholder="CVV"
-//                   required
-//                   className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//                 />
-//               </div>
-
-//               <div className="grid gap-4 sm:grid-cols-2">
-//                 <motion.input
-//                   variants={fadeUp}
-//                   type="text"
-//                   name="country"
-//                   value={paymentForm.country}
-//                   onChange={handleChange}
-//                   placeholder="Country"
-//                   required
-//                   className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//                 />
-//                 <motion.input
-//                   variants={fadeUp}
-//                   type="text"
-//                   name="zipCode"
-//                   value={paymentForm.zipCode}
-//                   required
-//                   onChange={handleChange}
-//                   placeholder="ZIP / Postal Code"
-//                   className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//                 />
-//               </div>
-
-//               <motion.textarea
-//                 variants={fadeUp}
-//                 name="billingAddress"
-//                 value={paymentForm.billingAddress}
-//                 onChange={handleChange}
-//                 rows="4"
-//                 required
-//                 placeholder="Billing Address"
-//                 className="rounded-2xl border border-stone-300 bg-stone-50 px-4 py-4 text-stone-900 outline-none transition focus:border-stone-950 focus:bg-white"
-//               />
-
-//               <motion.button
-//                 variants={fadeUp}
-//                 type="submit"
-//                 className="mt-2 w-full cursor-pointer rounded-full bg-stone-950 px-6 py-4 text-sm font-medium uppercase tracking-[0.24em] text-white transition hover:-translate-y-0.5 hover:bg-stone-800 hover:shadow-xl"
-//                 whileHover={{ y: -4, scale: 1.01 }}
-//                 whileTap={{ scale: 0.98 }}
-//               >
-//                 Pay Now
-//               </motion.button>
-//             </motion.form>
-//           </motion.section>
-
-//           <motion.aside
-//             variants={fadeUp}
-//             className="rounded-[2rem] border border-stone-200 bg-white p-6 shadow-[0_22px_60px_rgba(28,25,23,0.08)] lg:p-8"
-//           >
-//             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-stone-500">
-//               Order Summary
-//             </p>
-//             <h2 className="mt-4 font-serif text-3xl text-stone-950">
-//               Review before payment
-//             </h2>
-
-//             <div className="mt-6 space-y-4 rounded-[1.5rem] bg-stone-50 p-5">
-//               <div>
-//                 <p className="text-sm uppercase tracking-[0.18em] text-stone-500">
-//                   Customer
-//                 </p>
-//                 <p className="mt-2 text-base text-stone-800">
-//                   {checkoutForm.fullName || "Guest Customer"}
-//                 </p>
-//                 <p className="mt-1 text-sm text-stone-600">
-//                   {checkoutForm.phone || "No phone added"}
-//                 </p>
-//                 <p className="mt-1 text-sm text-stone-600">
-//                   {checkoutForm.address || "No address added"}
-//                 </p>
-//                 <p className="mt-1 text-sm text-stone-600">
-//                   {checkoutForm.city || "No city added"}
-//                 </p>
-//               </div>
-
-//               <div>
-//                 <p className="text-sm uppercase tracking-[0.18em] text-stone-500">
-//                   Items
-//                 </p>
-//                 <p className="mt-2 text-sm leading-6 text-stone-700">
-//                   {itemLabel}
-//                 </p>
-//               </div>
-
-//               <div className="border-t border-stone-200 pt-4">
-//                 <div className="flex items-center justify-between text-sm text-stone-600">
-//                   <span>Shipping</span>
-//                   <span>Free</span>
-//                 </div>
-//                 <div className="mt-3 flex items-center justify-between text-sm text-stone-600">
-//                   <span>Taxes</span>
-//                   <span>Included</span>
-//                 </div>
-//                 <div className="mt-4 flex items-center justify-between text-base font-semibold text-stone-950">
-//                   <span>Total</span>
-//                   <span>${subtotal.toFixed(2)}</span>
-//                 </div>
-//               </div>
-//             </div>
-//           </motion.aside>
-//         </div>
-//       </div>
-//     </motion.div>
-//   );
-// }
-
-// export default PaymentPage;
-import { useMemo, useState } from "react";
-import { motion } from "framer-motion";
-import { fadeUp, staggerContainer } from "../lib/motion";
-
-const initialForm = {
-  email: "",
-  fullName: "",
-  phone: "",
-  streetAddress: "",
-  city: "",
-  zipCode: "",
-};
-
-function PaymentPage({
-  cartItems,
-  subtotal,
-  checkoutForm,
-  onBackToStore,
-  onPaymentSuccess,
-}) {
-  const [form, setForm] = useState(initialForm);
-
-  const itemLabel = useMemo(() => {
-    if (!cartItems.length) return "No items in cart";
-    return cartItems.map(i => `${i.name} x${i.quantity}`).join(", ");
-  }, [cartItems]);
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setForm(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!form.streetAddress || !form.phone || !form.fullName) return;
-
-    onPaymentSuccess();
-  };
+  const handleSubmit = (event) => {
+    event.preventDefault()
+    if (!form.streetAddress || !form.phone || !form.fullName) return
+    onPaymentSuccess()
+  }
 
   return (
-    <motion.div
-      className="min-h-screen  bg-[#f6f1ea] px-4 py-10"
-      initial="hidden"
-      animate="visible"
-      variants={staggerContainer}
-    >
-      <div className="mx-auto max-w-6xl">
-
-        {/* HEADER */}
-        <motion.div
-          variants={fadeUp}
-          className="flex items-center justify-between mb-8"
-        >
+    <div className="min-h-screen bg-ivory">
+      <header className="border-b border-sand/70 bg-ivory/90 backdrop-blur-xl">
+        <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
           <button
+            type="button"
             onClick={onBackToStore}
-            className="px-5 py-2 rounded-full bg-white shadow hover:shadow-md transition"
+            className="btn-outline !py-2.5 !px-5"
+            whileTap={{ scale: 0.97 }}
           >
-            ← Back
+            <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+              <path d="M19 12H5M11 6l-6 6 6 6" />
+            </svg>
+            Back
           </button>
 
-          <h1 className="text-2xl font-bold text-stone-800">
-            Cash on Delivery
-          </h1>
+          <div className="text-center">
+            <p className="font-serif text-2xl tracking-[0.3em] text-ink">
+              VELORA<span className="text-sm tracking-normal text-gold">*</span>
+            </p>
+            <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.3em] text-fawn">Secure Checkout</p>
+          </div>
 
-          <div className="w-20" />
-        </motion.div>
+          <div className="flex items-center gap-2 rounded-full border border-sand bg-white/70 px-3 py-2">
+            <svg viewBox="0 0 24 24" className="h-4 w-4 text-gold" fill="none" stroke="currentColor" strokeWidth="1.8">
+              <rect x="4" y="11" width="16" height="9" rx="2" />
+              <path d="M8 11V7a4 4 0 0 1 8 0v4" />
+            </svg>
+            <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-taupe">Encrypted</span>
+          </div>
+        </div>
+      </header>
 
-        <div className="grid lg:grid-cols-2 gap-8">
-
-          {/* LEFT FORM */}
-          <motion.div
-            variants={fadeUp}
-            className="bg-white rounded-3xl shadow-xl p-8"
-          >
-            <h2 className="text-xl font-semibold mb-1">
-              Delivery Information
-            </h2>
-            <p className="text-sm text-stone-500 mb-6">
-              Fill your address for cash on delivery
+      <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8 lg:py-14">
+        <motion.div
+          className="grid gap-8 lg:grid-cols-[1.15fr_0.85fr]"
+          variants={staggerContainer}
+          initial="hidden"
+          animate="visible"
+        >
+          <motion.section variants={fadeUp} className="rounded-[2.2rem] border border-sand/70 bg-white p-6 shadow-soft sm:p-10">
+            <div className="flex items-center gap-3">
+              <span className="h-px w-10 bg-gold" />
+              <p className="text-[11px] font-bold uppercase tracking-[0.38em] text-gold">Delivery Details</p>
+            </div>
+            <h1 className="mt-5 font-serif text-4xl leading-tight text-ink sm:text-5xl">
+              Cash on <em className="italic text-gold">delivery.</em>
+            </h1>
+            <p className="mt-4 max-w-xl text-sm leading-7 text-taupe">
+              Your pieces will be delivered to the address below. Payment happens in cash when the order arrives at
+              your door.
             </p>
 
-            <motion.form
-              onSubmit={handleSubmit}
-              className="space-y-4"
-              variants={staggerContainer}
-            >
-
-              <input
-                name="email"
-                value={form.email}
-                onChange={handleChange}
-                placeholder="Email Address"
-                className="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-stone-400"
-              />
-
-              <input
-                name="fullName"
-                value={form.fullName}
-                onChange={handleChange}
-                placeholder="Full Name *"
-                className="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-stone-400"
-                required
-              />
-
-              <input
-                name="phone"
-                value={form.phone}
-                onChange={handleChange}
-                placeholder="Phone Number *"
-                className="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-stone-400"
-                required
-              />
-
-              <input
-                name="streetAddress"
-                value={form.streetAddress}
-                onChange={handleChange}
-                placeholder="House / Street Address *"
-                className="w-full rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-stone-400"
-                required
-              />
-
-              <div className="grid grid-cols-2 gap-4">
-                <input
-                  name="city"
-                  value={form.city}
-                  onChange={handleChange}
-                  placeholder="City *"
-                  className="rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-stone-400"
-                  required
-                />
-
-                <input
-                  name="zipCode"
-                  value={form.zipCode}
-                  onChange={handleChange}
-                  placeholder="ZIP Code"
-                  className="rounded-xl border px-4 py-3 focus:outline-none focus:ring-2 focus:ring-stone-400"
-                />
+            <motion.form variants={staggerContainer} onSubmit={handleSubmit} className="mt-8 grid gap-4">
+              <div className="grid gap-4 sm:grid-cols-2">
+                <input name="email" value={form.email} onChange={handleChange} placeholder="Email Address" className="input-luxe sm:col-span-2" />
+              </div>
+              <div className="grid gap-4 sm:grid-cols-2">
+                <input name="fullName" value={form.fullName} onChange={handleChange} placeholder="Full Name *" required className="input-luxe" />
+                <input name="phone" value={form.phone} onChange={handleChange} placeholder="Phone Number *" required className="input-luxe" />
+              </div>
+              <input name="streetAddress" value={form.streetAddress} onChange={handleChange} placeholder="House / Street Address *" required className="input-luxe" />
+              <div className="grid gap-4 sm:grid-cols-2">
+                <input name="city" value={form.city} onChange={handleChange} placeholder="City *" required className="input-luxe" />
+                <input name="zipCode" value={form.zipCode} onChange={handleChange} placeholder="ZIP / Postal Code" className="input-luxe" />
               </div>
 
-              <motion.button
-                type="submit"
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                className="w-full mt-4 bg-stone-900 text-white py-4 rounded-xl font-medium shadow-lg hover:bg-stone-800 transition"
-              >
-                Place Order (Cash on Delivery)
+              <div className="mt-2 flex flex-wrap items-center gap-3">
+                <span className="flex items-center gap-2 rounded-full border border-gold/50 bg-gold/10 px-4 py-2.5 text-[11px] font-bold uppercase tracking-[0.16em] text-gold">
+                  <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M5 13l4 4L19 7" />
+                  </svg>
+                  Cash on Delivery — Preferred
+                </span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.16em] text-fawn">Pay later, here</span>
+              </div>
+
+              <motion.button type="submit" className="btn-primary mt-2 w-full">
+                Place Order · ${subtotal.toFixed(2)}
               </motion.button>
-
+              <motion.p className="text-center text-[11px] font-medium text-fawn">
+                This is a demo checkout — no real payment is processed.
+              </motion.p>
             </motion.form>
-          </motion.div>
+          </motion.section>
 
-          {/* RIGHT SUMMARY */}
-          <motion.div
-            variants={fadeUp}
-            className="bg-white rounded-3xl shadow-xl p-8"
-          >
-            <h2 className="text-xl font-semibold mb-4">
-              Order Summary
+          <motion.aside variants={fadeUp} className="rounded-[2.2rem] bg-ink p-6 text-ivory shadow-lift sm:p-8 lg:sticky lg:top-28 lg:self-start">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gold-light">Order Summary</p>
+            <h2 className="mt-4 font-serif text-3xl">
+              {itemCount} {itemCount === 1 ? 'piece' : 'pieces'} in your bag
             </h2>
 
-            <div className="space-y-3 text-sm text-stone-600">
-              <p>{itemLabel}</p>
+            <div className="mt-6 space-y-4 border-t border-ivory/10 pt-6">
+              {cartItems.length > 0 ? (
+                cartItems.map((item) => (
+                  <div key={`${item.productId}-${item.size}`} className="flex items-center gap-3">
+                    <img src={item.image} alt={item.name} className="h-16 w-14 rounded-xl object-cover" />
+                    <div className="flex-1">
+                      <p className="font-serif text-lg leading-tight text-ivory">{item.name}</p>
+                      <p className="mt-0.5 text-xs text-ivory/60">
+                        Size {item.size} · Qty {item.quantity}
+                      </p>
+                    </div>
+                    <p className="font-serif text-lg text-gold-light">${(item.price * item.quantity).toFixed(2)}</p>
+                  </div>
+                ))
+              ) : (
+                <p className="text-sm text-ivory/60">No items in cart.</p>
+              )}
             </div>
 
-            <div className="mt-6 border-t pt-4 space-y-2 text-sm">
+            <div className="mt-6 space-y-2 border-t border-ivory/10 pt-5 text-sm text-ivory/75">
               <div className="flex justify-between">
-                <span>Shipping</span>
-                <span>Free</span>
+                <span className="uppercase tracking-[0.14em] text-ivory/50">Shipping</span>
+                <span className="font-semibold text-gold-light">Free</span>
               </div>
-
               <div className="flex justify-between">
-                <span>Payment</span>
-                <span className="text-green-600 font-medium">
-                  Cash on Delivery
-                </span>
+                <span className="uppercase tracking-[0.14em] text-ivory/50">Payment method</span>
+                <span className="font-semibold text-ivory">Cash on Delivery</span>
               </div>
-
-              <div className="flex justify-between text-lg font-bold mt-2">
-                <span>Total</span>
-                <span>${subtotal.toFixed(2)}</span>
+              <div className="flex items-center justify-between pt-2 text-lg">
+                <span className="font-bold uppercase tracking-[0.14em]">Total</span>
+                <span className="font-serif text-2xl text-gold-light">${subtotal.toFixed(2)}</span>
               </div>
             </div>
 
-            <div className="mt-6 p-4 rounded-xl bg-green-50 text-green-700 text-sm">
-              ✔ You will pay when order is delivered
+            <div className="mt-6 flex items-start gap-3 rounded-2xl border border-gold/30 bg-gold/10 p-4 text-sm leading-6 text-gold-light">
+              <svg viewBox="0 0 24 24" className="mt-0.5 h-5 w-5 shrink-0" fill="none" stroke="currentColor" strokeWidth="1.6">
+                <circle cx="12" cy="12" r="9" />
+                <path d="M12 11v5M12 8h.01" />
+              </svg>
+              You will pay in cash when the order is delivered. No advance payment needed.
             </div>
-          </motion.div>
-
-        </div>
+          </motion.aside>
+        </motion.div>
       </div>
-    </motion.div>
-  );
+    </div>
+  )
 }
 
-export default PaymentPage;
+export default PaymentPage

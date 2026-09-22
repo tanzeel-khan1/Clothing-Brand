@@ -1,13 +1,37 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: "Manrope", "Segoe UI", system-ui, sans-serif;
+  --font-serif: "Cormorant Garamond", "Playfair Display", Georgia, serif;
+
+  --color-ivory: #faf6f0;
+  --color-cream: #f3ecdf;
+  --color-linen: #ede3d1;
+  --color-sand: #e0d3bd;
+  --color-parchment: #d6c7ae;
+  --color-ink: #17130c;
+  --color-coffee: #2e261a;
+  --color-taupe: #857a66;
+  --color-fawn: #a49980;
+  --color-gold: #a8813f;
+  --color-gold-light: #d6bd8c;
+
+  --shadow-soft: 0 24px 60px -22px rgba(23, 19, 12, 0.2);
+  --shadow-lift: 0 34px 80px -26px rgba(23, 19, 12, 0.32);
+  --shadow-rim: 0 14px 40px -18px rgba(168, 129, 63, 0.35);
+}
+
 html {
   scroll-behavior: smooth;
 }
 
 body {
   margin: 0;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background: #f7f3ee;
+  background: #faf6f0;
+  color: #17130c;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 * {
@@ -33,18 +57,164 @@ img {
   max-width: 100%;
 }
 
+::selection {
+  background: #a8813f;
+  color: #faf6f0;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3ecdf;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c9b691;
+  border-radius: 999px;
+  border: 2px solid #f3ecdf;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8813f;
+}
+
+/* ---- Nav links ---- */
 .nav-link {
-  color: #57534e;
-  font-size: 0.95rem;
-  transition: color 0.2s ease, transform 0.2s ease;
+  position: relative;
+  color: #5b5342;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  transition: color 0.25s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -6px;
+  height: 1px;
+  width: 0;
+  background: #a8813f;
+  transition: width 0.3s ease;
 }
 
 .nav-link:hover {
-  color: #0c0a09;
-  transform: translateY(-1px);
+  color: #17130c;
 }
 
+.nav-link:hover::after {
+  width: 100%;
+}
+
+/* ---- Buttons ---- */
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 9999px;
+  background: #17130c;
+  color: #faf6f0;
+  padding: 1rem 2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #a8813f;
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lift);
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  border-radius: 9999px;
+  border: 1px solid #17130c;
+  color: #17130c;
+  background: transparent;
+  padding: 0.95rem 2rem;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  transition: all 0.3s ease;
+}
+
+.btn-outline:hover {
+  border-color: #a8813f;
+  color: #a8813f;
+  transform: translateY(-2px);
+}
+
+/* ---- Inputs ---- */
+.input-luxe {
+  width: 100%;
+  border-radius: 14px;
+  border: 1px solid #e0d3bd;
+  background: #faf6f0;
+  padding: 0.95rem 1.1rem;
+  color: #17130c;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.input-luxe::placeholder {
+  color: #a49980;
+}
+
+.input-luxe:focus {
+  border-color: #a8813f;
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(168, 129, 63, 0.14);
+}
+
+/* ---- Marquee ---- */
+@keyframes marquee {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marquee 26s linear infinite;
+}
+
+/* ---- Rotating badge ---- */
+@keyframes rotate-slow {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.rotate-slow {
+  animation: rotate-slow 18s linear infinite;
+}
+
+/* ---- Toast ---- */
 .Toastify__toast {
-  border-radius: 18px;
-  font-size: 0.92rem;
+  border-radius: 16px;
+  font-size: 0.9rem;
+  font-family: var(--font-sans);
+  letter-spacing: 0.02em;
+  box-shadow: var(--shadow-lift);
 }

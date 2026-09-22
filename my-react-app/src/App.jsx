@@ -39,7 +39,7 @@ function Storefront({
   onRemoveItem,
 }) {
   return (
-    <div className="min-h-screen bg-[#f6f1ea] text-stone-900">
+    <div className="min-h-screen bg-ivory text-ink">
       <Navbar cartCount={cartCount} onOpenCart={onOpenCart} onNavigate={onNavigate} />
 
       <main>
@@ -262,10 +262,11 @@ function App() {
 
       <ToastContainer
         autoClose={1800}
-        hideProgressBar={false}
+        hideProgressBar={true}
         newestOnTop
         closeOnClick
         pauseOnHover={false}
+        toastClassName="!rounded-2xl"
         theme="light"
       />
     </>

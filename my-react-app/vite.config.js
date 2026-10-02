@@ -11,9 +11,3 @@ export default defineConfig({
     babel({ presets: [reactCompilerPreset()] }),
   ],
 });
-
-
-
-
-
-

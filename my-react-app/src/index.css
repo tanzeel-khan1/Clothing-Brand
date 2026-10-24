@@ -27,11 +27,13 @@ html {
 
 body {
   margin: 0;
+  min-width: 320px;
   background: #faf6f0;
   color: #17130c;
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 * {
@@ -52,9 +54,28 @@ button:disabled {
   cursor: not-allowed;
 }
 
+button,
+a,
+input,
+textarea {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid #a8813f;
+  outline-offset: 4px;
+}
+
 img {
   display: block;
   max-width: 100%;
+}
+
+section[id] {
+  scroll-margin-top: 6rem;
 }
 
 ::selection {
@@ -217,4 +238,15 @@ img {
   font-family: var(--font-sans);
   letter-spacing: 0.02em;
   box-shadow: var(--shadow-lift);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
 }

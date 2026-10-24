@@ -78,13 +78,13 @@ function Footer() {
             <p className="mt-5 text-sm leading-6 text-taupe">
               Early access to seasonal drops and styling notes — no noise, ever.
             </p>
-            <form onSubmit={handleSubscribe} className="mt-5 flex items-center gap-2">
+            <form onSubmit={handleSubscribe} className="mt-5 flex min-w-0 items-center gap-2">
               <input
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 placeholder="Your email address"
-                className="input-luxe"
+                className="input-luxe min-w-0"
               />
               <button type="submit" className="btn-primary !px-6" aria-label="Subscribe">
                 <svg viewBox="0 0 24 24" className="h-4 w-4" fill="none" stroke="currentColor" strokeWidth="2">

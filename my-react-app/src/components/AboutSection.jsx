@@ -19,8 +19,8 @@ function AboutSection() {
     >
       <div className="mx-auto grid max-w-7xl items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <motion.div variants={fadeUp} className="relative order-2 lg:order-1">
-          <div className="absolute -inset-px -translate-x-4 translate-y-4 rounded-[2.2rem] border border-gold/35" />
-          <div className="relative overflow-hidden rounded-[2.2rem] shadow-soft">
+          <div className="absolute -inset-px -translate-x-3 translate-y-3 rounded-[1.5rem] border border-gold/35 sm:-translate-x-4 sm:translate-y-4" />
+          <div className="relative overflow-hidden rounded-[1.5rem] shadow-soft">
             <img
               src="https://images.unsplash.com/photo-1523381210434-271e8be1f52b?auto=format&fit=crop&w=1000&q=80"
               alt="Velora atelier"

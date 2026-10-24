@@ -8,9 +8,9 @@ function ProductCard({ product, selectedSize, onSelectSize, onAddToCart, isAdded
     <motion.article
       variants={fadeUp}
       whileHover={{ y: -8 }}
-      className="group relative overflow-hidden rounded-[2.2rem] border border-sand/70 bg-white shadow-soft transition duration-500 hover:shadow-lift"
+      className="group relative overflow-hidden rounded-[1.5rem] border border-sand/70 bg-white shadow-soft transition duration-500 hover:shadow-lift"
     >
-      <div className="relative m-3 overflow-hidden rounded-[1.7rem] bg-linen">
+      <div className="relative m-3 overflow-hidden rounded-[1.15rem] bg-linen">
         <img
           src={product.image}
           alt={product.name}
@@ -32,7 +32,7 @@ function ProductCard({ product, selectedSize, onSelectSize, onAddToCart, isAdded
         </div>
       </div>
 
-      <div className="p-6 pt-4">
+      <div className="p-5 pt-4 sm:p-6 sm:pt-4">
         <h3 className="font-serif text-2xl text-ink">{product.name}</h3>
         <p className="mt-2 text-sm leading-6 text-taupe">{product.description}</p>
 

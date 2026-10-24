@@ -1,23 +1,24 @@
 function Navbar({ cartCount, onOpenCart, onNavigate }) {
   return (
     <>
-      <div className="bg-ink py-2.5 text-center text-[11px] font-semibold uppercase tracking-[0.28em] text-ivory">
+      <div className="bg-ink px-3 py-2.5 text-center text-[9px] font-semibold uppercase tracking-[0.2em] text-ivory sm:text-[10px] sm:tracking-[0.28em]">
         Complimentary worldwide shipping <span className="mx-2 inline-block h-1 w-1 rounded-full bg-gold align-middle" />
         The Autumn Atelier Collection
       </div>
 
       <header className="sticky top-0 z-50 border-b border-sand/60 bg-ivory/85 shadow-[0_1px_0_rgba(120,100,60,0.04)] backdrop-blur-xl">
-        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-4 sm:px-6 lg:px-8">
+        <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6 sm:py-4 lg:px-8">
           <button
             type="button"
             onClick={() => onNavigate('home')}
-            className="group cursor-pointer font-serif text-2xl tracking-[0.34em] text-ink"
+            className="group cursor-pointer font-serif text-xl tracking-[0.3em] text-ink sm:text-2xl sm:tracking-[0.34em]"
+            aria-label="VELORA home"
           >
             VELORA
             <span className="ml-1 align-middle text-base tracking-normal text-gold transition group-hover:text-coffee">*</span>
           </button>
 
-          <nav className="hidden items-center gap-10 md:flex">
+          <nav className="hidden items-center gap-10 md:flex" aria-label="Main navigation">
             <button type="button" onClick={() => onNavigate('about')} className="nav-link cursor-pointer">
               About
             </button>

@@ -10,7 +10,7 @@ function Footer() {
     event.preventDefault()
     if (!email.trim()) return
     setEmail('')
-    toast.success('Welcome to the VELORA circle. Watch your inbox.', { position: 'top-right' })
+    toast.success('Welcome to the Your Brand circle. Watch your inbox.', { position: 'top-right' })
   }
 
   return (
@@ -25,7 +25,7 @@ function Footer() {
         <div className="grid gap-12 lg:grid-cols-[1.2fr_1fr_1fr_1.4fr]">
           <div>
             <p className="font-serif text-3xl tracking-[0.3em] text-ink">
-              VELORA<span className="text-base tracking-normal text-gold">*</span>
+              Your Brand<span className="text-base tracking-normal text-gold">*</span>
             </p>
             <p className="mt-4 max-w-xs text-sm leading-6 text-taupe">
               Premium essentials crafted in small runs for a quiet, modern statement.
@@ -96,7 +96,7 @@ function Footer() {
         </div>
 
         <div className="mt-12 flex flex-col gap-3 border-t border-sand pt-6 text-xs text-fawn sm:flex-row sm:items-center sm:justify-between">
-          <p>(c) 2026 VELORA. Luxury fashion demo website.</p>
+          <p>(c) 2026 Your Brand. Luxury fashion demo website.</p>
           <p>
             Developed by{' '}
             <a href="https://tanzilbuilds.xyz" target="_blank" rel="noreferrer" className="font-bold text-gold hover:text-ink">

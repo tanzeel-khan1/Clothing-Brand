@@ -12,9 +12,9 @@ function Navbar({ cartCount, onOpenCart, onNavigate }) {
             type="button"
             onClick={() => onNavigate('home')}
             className="group cursor-pointer font-serif text-xl tracking-[0.3em] text-ink sm:text-2xl sm:tracking-[0.34em]"
-            aria-label="VELORA home"
+            aria-label="Your Brand home"
           >
-            VELORA
+            Your Brand
             <span className="ml-1 align-middle text-base tracking-normal text-gold transition group-hover:text-coffee">*</span>
           </button>
 

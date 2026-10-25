@@ -43,7 +43,7 @@ function PaymentPage({ cartItems, subtotal, checkoutForm, onBackToStore, onPayme
 
           <div className="text-center">
             <p className="font-serif text-2xl tracking-[0.3em] text-ink">
-              VELORA<span className="text-sm tracking-normal text-gold">*</span>
+              Your Brand<span className="text-sm tracking-normal text-gold">*</span>
             </p>
             <p className="mt-0.5 text-[10px] font-bold uppercase tracking-[0.3em] text-fawn">Secure Checkout</p>
           </div>

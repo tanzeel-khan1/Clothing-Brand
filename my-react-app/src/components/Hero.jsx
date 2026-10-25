@@ -102,7 +102,7 @@ function Hero({ onShopNow }) {
                     fontWeight: 700,
                   }}
                 >
-                  <textPath href="#veloraCircle">VELORA · EST. 2026 · MADE TO BE WORN</textPath>
+                  <textPath href="#veloraCircle">Your Brand · EST. 2026 · MADE TO BE WORN</textPath>
                 </text>
               </svg>
               <div className="absolute flex h-10 w-10 items-center justify-center rounded-full border border-gold/40 bg-ivory shadow-rim">

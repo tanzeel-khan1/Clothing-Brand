@@ -23,7 +23,7 @@ const contactItems = [
   },
   {
     label: 'Email',
-    value: 'hello@velora-demo.com',
+    value: 'hello@YourBranddemo.com',
     icon: (
       <svg viewBox="0 0 24 24" className="h-5 w-5" fill="none" stroke="currentColor" strokeWidth="1.5">
         <rect x="2" y="4" width="20" height="16" rx="3" />
@@ -66,7 +66,7 @@ function ContactSection() {
               </p>
               <button
                 type="button"
-                onClick={() => (window.location.href = 'mailto:hello@velora-demo.com')}
+                onClick={() => (window.location.href = 'mailto:hello@YourBranddemo.com')}
                 className="btn-primary mt-8 !bg-gold !text-white hover:!bg-gold-light"
               >
                 Get in Touch

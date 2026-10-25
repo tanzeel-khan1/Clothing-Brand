@@ -55,3 +55,6 @@ function Navbar({ cartCount, onOpenCart, onNavigate }) {
 }
 
 export default Navbar
+
+
+
